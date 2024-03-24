@@ -1,7 +1,9 @@
 declare namespace StylesModuleScssNamespace {
   export interface IStylesModuleScss {
-    storybookHeader: string;
-    welcome: string;
+    holder: string;
+    item: string;
+    root: string;
+    shortProductCard: string;
   }
 }
 
