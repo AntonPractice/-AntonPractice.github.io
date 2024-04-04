@@ -1,8 +1,8 @@
-.short-product-card__hHbrV {
+.short-product-card__Q4gAo {
   display: block;
   position: relative;
   width:600px;
-  height: 100px;
+  height: 400px;
   padding: 26px 24px 20px 24px;
   font-size: 13px;
   color: var(--primary-color-text);
@@ -12,6 +12,13 @@
 
 }
 
+.root__EwoKr{
+  overflow: auto
+}
+.holder__SM71F{
+  position: relative
+}
+.item__EgrZM{
+  position: absolute}
 
-
-/*# sourceMappingURL=components-ShopProduct-art-ShopProduct-art-stories.css.map*/
+/*# sourceMappingURL=components-InfinityList-InfinityList-stories.css.map*/

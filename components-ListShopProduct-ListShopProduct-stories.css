@@ -1,3 +1,18 @@
+.short-product-card__hHbrV {
+  display: block;
+  position: relative;
+  width:600px;
+  height: 100px;
+  padding: 26px 24px 20px 24px;
+  font-size: 13px;
+  color: var(--primary-color-text);
+  box-sizing: border-box;
+  transition: 0.2s linear;
+  background-color: var(--white-color-background);
+
+}
+
+
 .story__RVnjV {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
@@ -21,4 +36,4 @@
 
 }
 
-/*# sourceMappingURL=components-Button-Button-stories.css.map*/
+/*# sourceMappingURL=components-ListShopProduct-ListShopProduct-stories.css.map*/

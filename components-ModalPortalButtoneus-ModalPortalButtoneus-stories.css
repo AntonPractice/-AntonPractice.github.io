@@ -1,0 +1,57 @@
+.story__RVnjV {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    border: 0;
+    border-radius: 3em;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+}
+.story-Dark__dlbof {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    border: 0;
+    border-radius: 3em;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    color: rgb(177, 189, 230);
+    background-color: rgb(48, 51, 61);
+    ;
+
+}
+
+.background__jX9PB{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 90%;
+    background-color: rgba(66, 57, 57, 0.5); 
+    overflow: hidden;
+    top: 0;
+    z-index: 10000;
+}
+.modal-content__g_nNz{
+    display: block;
+    position: relative;
+    background-color: #F5F7FF;
+    padding: 40px 16px 16px 16px;
+    min-width: 200px;
+    min-height: 200px;
+
+}
+.button-close__ttWos{
+    display: block;
+    position: absolute;
+    color:#10002b;
+    top:16px;
+    right: 16px;
+    transition: 0.2s linear;
+    cursor: pointer;
+    &:hover{
+        opacity: 0.5;    }
+}
+
+/*# sourceMappingURL=components-ModalPortalButtoneus-ModalPortalButtoneus-stories.css.map*/

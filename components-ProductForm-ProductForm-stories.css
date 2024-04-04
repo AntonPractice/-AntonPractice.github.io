@@ -1,24 +1,23 @@
-.story__RVnjV {
+.form__Nq2ff {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
-    border: 0;
+    border: 0,2;
     border-radius: 3em;
-    cursor: pointer;
     display: inline-block;
     line-height: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 700px;
+    max-height: 500px;
 }
-.story-Dark__dlbof {
+.form-input__n0Sc5 {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
-    border: 0;
-    border-radius: 3em;
-    cursor: pointer;
-    display: inline-block;
     line-height: 1;
+    padding: 7px;
     color: rgb(177, 189, 230);
-    background-color: rgb(48, 51, 61);
-    ;
-
+    display: flex;
+    flex-direction: column
 }
 
-/*# sourceMappingURL=components-Button-Button-stories.css.map*/
+/*# sourceMappingURL=components-ProductForm-ProductForm-stories.css.map*/
