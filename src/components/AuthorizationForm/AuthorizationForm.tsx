@@ -9,14 +9,6 @@ type Inputs = {
   password: string;
 };
 
-// валидация полей
-const schema = yup
-  .object()
-  .shape({
-    mail: yup.string().required(),
-    password: yup.string().required(),
-  })
-  .required();
 
 export const AuthorizationForm = () => {
   const {
