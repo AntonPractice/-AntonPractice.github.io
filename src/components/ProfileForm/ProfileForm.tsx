@@ -12,10 +12,8 @@ type Inputs = {
 };
 
 
-export const AuthorizationForm = () => {
-  const [, { login }] = useTokenContext();
-  const location = useLocation();
-  const navigate = useNavigate();
+export const ProfileForm = () => {
+
 
   const {
     register,
@@ -31,16 +29,14 @@ export const AuthorizationForm = () => {
   });
 
   const customHandleSubmit = (values: any) => {
-    const state = location.state as NavigationState;
-    login();
-    navigate(state?.from || '/');
+    alert(JSON.stringify(values))
 
     reset();
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-      <h1>Форма авторизации</h1>
+      <h1>Редактирование профиля</h1>
 
       <div className={styles.formInput}>
         <label htmlFor="mail">E-Mail</label>
@@ -71,7 +67,7 @@ export const AuthorizationForm = () => {
         {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
       </div>
       <hr />
-      <button type="submit" disabled={!isValid}>Авторизация</button>
+      <button type="submit" disabled={!isValid}>Редактировать</button>
     </form>
   );
 };
