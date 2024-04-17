@@ -1,10 +1,6 @@
 declare namespace StylesModuleScssNamespace {
   export interface IStylesModuleScss {
-    link: string;
-    linkActive: string;
-    linkVisited: string;
-    storybookHeader: string;
-    welcome: string;
+    root: string;
   }
 }
 
