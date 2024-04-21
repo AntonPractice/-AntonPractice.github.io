@@ -1,4 +1,7 @@
 import React, { createContext, FC, useContext, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import  { tokenActions, tokenSelectors } from 'src/store/token';
+import { profileActions, profileSelectors } from "src/store/profile";
 
 export type TokenProviderProps = {
   children: React.ReactNode;
@@ -18,13 +21,23 @@ const TokenContext = createContext<TokenContextType>(null);
 export const useTokenContext = (): TokenContextType => useContext(TokenContext);
 
 export const TokenProvider: FC<TokenProviderProps> = ({ children }) => {
-  const [token, setToken] = useState<string>(() => localStorage.getItem('token'));
 
+  const dispatch = useDispatch();
+  const profile= useSelector(profileSelectors.get)
+  const clearProfile = () => dispatch(profileActions.remove());
+
+  const tokenSelector = useSelector(tokenSelectors.get);
+  const genToken = () => dispatch(tokenActions.gen());
+  const clearToken = () => dispatch(tokenActions.clear());
+  const [token, setToken] = useState<string>(tokenSelector);
+
+  
   useEffect(() => {
     if (token) {
-      localStorage.setItem('token', token);
+      genToken()
     } else {
-      localStorage.removeItem('token');
+      clearProfile()
+      clearToken()
     }
   }, [token]);
 

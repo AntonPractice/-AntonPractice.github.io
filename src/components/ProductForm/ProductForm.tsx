@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import * as styles from './styles.module.scss';
+import { useDispatch } from 'react-redux';
+import { productActions, productSelectors } from 'src/store/products';
 
 // типизация полей
 type Inputs = {
@@ -10,6 +12,17 @@ type Inputs = {
   price: number;
   img: string;
 };
+export interface IProductForm {
+  id?: string;
+  price?: number;
+  index?: number;
+  image?: string;
+  name?: string;
+  description?: string;
+  addMode?: boolean;
+  addAdminMode?: boolean;
+  onClose?: () => void;
+}
 
 // валидация полей
 const schema = yup
@@ -22,7 +35,7 @@ const schema = yup
   })
   .required();
 
-export const ProductForm = () => {
+export const ProductForm: FC<IProductForm> = ({ id, price, image, description, name, addMode, index, onClose, addAdminMode }) => {
   const {
     register,
     handleSubmit,
@@ -31,20 +44,29 @@ export const ProductForm = () => {
   } = useForm<Inputs>({
     mode: "onBlur",
     defaultValues: {
-      name: "",
-      description: "",
-      price: 0,
-      img: "",
+      name: name || '',
+      description: description || '',
+      price: price || 0,
+      img: image || '',
     },
   });
+  const dispatch = useDispatch();
+
+  const editProduct = (id: any, name: any, image: any, price: any, description: any) => { dispatch(productActions.edit({ id, name, image, price, description })) }
+  const addProduct = ( name: any, image: any, price: any, description: any) => dispatch(productActions.addNew({  name, image, price, description }));
 
   const customHandleSubmit = (values: any) => {
-    alert(JSON.stringify(values))
-
+    debugger
+    if (addAdminMode) {
+      addProduct( values.name, values.image, values.price, values.description)
+    } else {
+      editProduct(id, values.name, values.image, values.price, values.description)
+    }
     reset();
+    onClose()
   };
 
-  return (
+  return (<>
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
       <h1>Добавление/Редактирование продукта</h1>
 
@@ -95,5 +117,7 @@ export const ProductForm = () => {
       <hr />
       <button type="submit" disabled={!isValid}>Отправить</button>
     </form>
+  </>
   );
 };
+

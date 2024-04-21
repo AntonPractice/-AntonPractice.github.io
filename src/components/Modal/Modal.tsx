@@ -14,12 +14,12 @@ const Modal: FC<IModal> = ({ visible, onClose, children }) => {
 
     if (!visible) return null
     return (
-            <div className={styles.background} >
+            // <div className={styles.background} >
                 <div className={styles.modalContent} style={theme === 'dark'?{backgroundColor: 'rgb(177, 189, 230)'}:{}}>
                     <CloseSharp className={styles.buttonClose} onClick={onClose}/>
                     {children}
                 </div>
-            </div>
+            // </div>
     )
 }
 

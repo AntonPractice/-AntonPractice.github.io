@@ -4,6 +4,8 @@ import * as styles from './styles.module.scss';
 import { useTokenContext } from "src/TokenProvider";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavigationState } from 'src/navigation/types';
+import { profileActions, profileSelectors } from "src/store/profile";
+import { useDispatch, useSelector } from "react-redux";
 
 // типизация полей
 type Inputs = {
@@ -16,6 +18,7 @@ export const AuthorizationForm = () => {
   const [, { login }] = useTokenContext();
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -29,12 +32,13 @@ export const AuthorizationForm = () => {
       password: "",
     },
   });
+  const addProfile = (newName: any,password: any) => dispatch(profileActions.set({newName,password}));
 
   const customHandleSubmit = (values: any) => {
     const state = location.state as NavigationState;
     login();
     navigate(state?.from || '/');
-
+    addProfile(values.mail, values.password)
     reset();
   };
 

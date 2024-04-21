@@ -1,19 +1,24 @@
 
 import React, { FC, useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { productActions, productSelectors } from 'src/store/products';
 
 import { ShopProductСart } from '../ShopProductСart/ShopProductСart';
 import { Button } from '../Button/Button';
+import Modal from '../Modal/Modal';
+import { ProductForm } from '../ProductForm/ProductForm';
+import { profileActions, profileSelectors } from "src/store/profile";
 
 interface Product {
-  price: number;
-  id: string;
-  name: string;
-  image: string;
-  description: string;
+  price?: number;
+  id?: string;
+  name?: string;
+  image?: string;
+  description?: string;
 }
 
 export interface ListShopProductProductСartProps {
-  products: Product[];
+  products?: Product[];
 }
 
 export const createRandomProduct = (createdAt: string): Product => {
@@ -28,20 +33,22 @@ export const createRandomProduct = (createdAt: string): Product => {
 };
 
 export const ListShopProduct: FC<ListShopProductProductСartProps> = ({ products }) => {
-  const [listProducts, setlistProducts] = useState<Product[]>(products)
+  const dispatch = useDispatch();
+  const listProducts = useSelector(productSelectors.get);
+  debugger
+  const profile= useSelector(profileSelectors.get)
+  const addProduct = () => dispatch(productActions.add());
   const targetRef = useRef<HTMLDivElement | null>(null)
   const rootRef = useRef<HTMLDivElement | null>(null)
 
-  const createProduct = () => {
-    setlistProducts([...listProducts, createRandomProduct(new Date().toISOString())])
-  }
+  const [visible, setVisible] = useState<boolean>(false)
 
   useEffect(() => {
     const handleCallBackIntersection = function (entries: IntersectionObserverEntry[]) {
       entries.forEach((entry: IntersectionObserverEntry) => {
 
         if (entry.isIntersecting) {
-          createProduct()
+          addProduct()
           observer.unobserve(entry.target)
         }
       })
@@ -71,17 +78,21 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({ products
   return (
     <>
       <div ref={rootRef} className='MyRoot' style={{ maxHeight: '600px', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
-        {listProducts.map((product, index) => {
+        {listProducts.map((product, index: number) => {
           return (
             <div ref={index === listProducts.length - 1 ? targetRef : null}>
-              <ShopProductСart key={product.id} price={product.price} name={product.name} description={product.description} image={product.image} />
+              <ShopProductСart adminMode={profile[0]['name'] == 'admin'} key={product.id} index={index} id={product.id} price={product.price} name={product.name} description={product.description} image={product.image} addMode />
             </div>
+
           )
         })}
       </div>
       <div>
-        <Button size={""} label={"Показать Ещё"} onClick={createProduct} />
+     { profile[0]['name'] == 'admin' && <Button size={""} label={"Добавить новый продукт"} onClick={() => setVisible(true)} />}
       </div>
+      <Modal visible={visible} onClose={() => setVisible(false)} >
+        <ProductForm addAdminMode onClose={() => setVisible(false)} />
+      </Modal>
     </>
   );
 };
