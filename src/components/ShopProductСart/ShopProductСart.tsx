@@ -29,7 +29,6 @@ export const ShopProductСart: FC<ShopProductСartProps> = ({ id, price, image, 
   const addCartProduct = () => dispatch(cartProductsActions.set({ id, name, image, price, description }));
   const removeCartProduct = () => { dispatch(cartProductsActions.remove({ id })) }
   const [visible, setVisible] = useState<boolean>(false)
-  close
   return (
     <>
       <Modal visible={visible} onClose={() => setVisible(false)} >
@@ -45,7 +44,6 @@ export const ShopProductСart: FC<ShopProductСartProps> = ({ id, price, image, 
         </div>
 
       </div>
-    
     </>
   );
 };
