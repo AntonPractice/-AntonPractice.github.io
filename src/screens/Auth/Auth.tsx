@@ -11,9 +11,7 @@ const Auth: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [, { login }] = useTokenContext();
-  const onClick = () => {
-    
-  };
+
   return (
     <div className={styles.root}>
       <Frame>

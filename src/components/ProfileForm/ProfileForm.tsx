@@ -4,6 +4,8 @@ import * as styles from './styles.module.scss';
 import { useTokenContext } from "src/TokenProvider";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavigationState } from 'src/navigation/types';
+import { useDispatch, useSelector } from "react-redux";
+import { profileActions, profileSelectors } from "src/store/profile";
 
 // типизация полей
 type Inputs = {
@@ -13,7 +15,9 @@ type Inputs = {
 
 
 export const ProfileForm = () => {
-
+  const dispatch = useDispatch();
+  const profile= useSelector(profileSelectors.get)
+  const setProfile =  (id: any, newName: any,password: any) => dispatch(profileActions.edit({id, newName,password}));
 
   const {
     register,
@@ -23,15 +27,15 @@ export const ProfileForm = () => {
   } = useForm<Inputs>({
     mode: "onBlur",
     defaultValues: {
-      mail: "",
-      password: "",
+      mail: profile[0]['name'],
+      password: profile[0]['password'],
     },
   });
 
   const customHandleSubmit = (values: any) => {
     alert(JSON.stringify(values))
-
-    reset();
+    setProfile(profile[0]['id'], values.mail, values.password)
+   // reset();
   };
 
   return (
