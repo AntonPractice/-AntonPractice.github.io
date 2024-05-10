@@ -8,10 +8,6 @@ import { Button } from 'src/components/Button/Button';
 import { AuthorizationForm } from 'src/components/AuthorizationForm/AuthorizationForm';
 
 const Auth: FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [, { login }] = useTokenContext();
-
   return (
     <div className={styles.root}>
       <Frame>

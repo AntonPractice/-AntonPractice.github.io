@@ -5,13 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 
 interface ButtonThemeProps {
-
   size?: string;
-  label: string;
+  label?: string;
   onClick?: () => void;
 }
 
-export const ButtonLang: FC<{}> = () => {
+export const ButtonLang: FC<ButtonThemeProps> = () => {
 
   const [theme] = useContext(ThemeContext);
   const { i18n } = useTranslation()
@@ -29,7 +28,6 @@ export const ButtonLang: FC<{}> = () => {
         type="button"
         className={theme === 'dark' ? styles.storyDark : styles.story}
         onClick={setRuLang}
-      // {...props}
       >
         {'RU'}
       </button>
@@ -37,7 +35,6 @@ export const ButtonLang: FC<{}> = () => {
         type="button"
         className={theme === 'dark' ? styles.storyDark : styles.story}
         onClick={setEnuLang}
-      // {...props}
       >
         {'ENU'}
       </button>

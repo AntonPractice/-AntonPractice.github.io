@@ -4,6 +4,7 @@ import * as styles from './styles.module.scss';
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { Mutation } from "src/server.types";
 
+
 export type EditProductVariables = {
   putId?: string;
   price?: number;
@@ -14,42 +15,27 @@ export type EditProductVariables = {
   input?: any;
 };
 
-const GET_PRODUCT = gql`
-query GetOne($getOneId: ID!) {
+const ADD_PRODUCT = gql`
+mutation Add($input: ProductAddInput!) {
   products {
-    getOne(id: $getOneId) {
-      id
+    add(input: $input) {
       name
       photo
       desc
       createdAt
-      updatedAt
-      oldPrice
-      price
-    }
-  }
-}
-`;
-const EDIT_PRODUCT = gql`
-mutation Mutation($input: ProductUpdateInput!, $putId: ID!) {
-  products {
-    put(input: $input, id: $putId) {
-      name
-      photo
-      desc
       price
     }
   }
 }
 `;
 
-// типизация полей
 type Inputs = {
   name: string;
   description: string;
   price: number;
   img: string;
 };
+
 export interface IProductForm {
   id?: string;
   price?: number;
@@ -62,20 +48,14 @@ export interface IProductForm {
   onClose?: () => void;
 }
 
-export const ProductForm: FC<IProductForm> = ({ id, price, image, description, name, addMode, index, onClose, addAdminMode }) => {
+export const AddProductForm: FC<IProductForm> = ({ id, price, image, description, name, addMode, index, onClose, addAdminMode }) => {
 
-  const [editProduct] = useMutation<Pick<Mutation, 'products'>, EditProductVariables>(
-    EDIT_PRODUCT
-  );
-
-  const { data, error, loading } = useQuery(GET_PRODUCT, {
-    variables: { getOneId: id },
-  });
-
+  const [addProduct] = useMutation<Pick<Mutation, 'products'>, EditProductVariables>(ADD_PRODUCT);
 
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors, isValid },
   } = useForm<Inputs>({
@@ -87,48 +67,33 @@ export const ProductForm: FC<IProductForm> = ({ id, price, image, description, n
       img: image || '',
     },
   });
-  useEffect(() => {
-    if (data) {
-      setValue(
-        'description', data.products.getOne['desc']
-      );
-      setValue(
-        'price', data.products.getOne['price']
-      );
-      setValue(
-        'name', data.products.getOne['name']
-      );
-      setValue(
-        'img', data.products.getOne['photo']
-      );
-    }
 
-  }, [data]);
 
   const customHandleSubmit: SubmitHandler<Inputs> = (values) => {
-    const input = {
-      "name": values.name,
-      "photo": values.img,
-      "price": Number(values.price),
-      "desc": values.description,
-      "categoryId": "65ba656940505ca249a20f1c"
-    };
-    const putId = id;
-    localStorage.setItem('protectedMode', 'true');
 
-    editProduct({ variables: { input, putId }, refetchQueries: [{ query: GET_PRODUCT, variables: { id } }], })
-      .then(() => { onClose() })
-      .catch((err) => { alert(err.message) })
-      .finally(() => {
-        localStorage.setItem('protectedMode', '');
-      });;
+    if (addAdminMode) {
+      const input = {
+        "name": values.name,
+        "photo": values.img,
+        "price": Number(values.price),
+        "desc": values.description,
+        "categoryId": "65ba656940505ca249a20f1c"
+      };
+      localStorage.setItem('protectedMode', 'true');
+
+      addProduct({ variables: { input } })
+        .then(() => { onClose() })
+        .catch((err) => { alert(err.message) })
+        .finally(() => {
+          localStorage.setItem('protectedMode', '');
+
+        });
+    }
 
   };
 
-  if (loading) return <div>loading...</div>;
-  if (error) return <div>{error.message}</div>;
   return (<form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-    <h1>Добавление/Редактирование продукта</h1>
+    <h1>Добавление  продукта</h1>
     <div className={styles.formInput}>
       <label htmlFor="name">Наименование</label>
       <input
@@ -174,7 +139,7 @@ export const ProductForm: FC<IProductForm> = ({ id, price, image, description, n
       {errors.img && <p style={{ color: "red" }}>{errors.img.message}</p>}
     </div>
     <hr />
-    <button type="submit" disabled={!isValid}>Отправить</button>
+    <button type="submit" disabled={!isValid}>Добавить</button>
   </form>);
 };
 

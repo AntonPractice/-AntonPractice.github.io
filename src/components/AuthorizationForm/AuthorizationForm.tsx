@@ -6,19 +6,41 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { NavigationState } from 'src/navigation/types';
 import { profileActions, profileSelectors } from "src/store/profile";
 import { useDispatch, useSelector } from "react-redux";
+import { gql, useMutation } from "@apollo/client";
+import { Mutation } from "src/server.types";
 
-// типизация полей
+export type AddUserVariables = {
+  email: string;
+  password: string;
+  commandId: string;
+};
+
+const ADD_PROFILE = gql`
+mutation Signup($email: String!, $password: String!, $commandId: String!) {
+  profile {
+    signup(email: $email, password: $password, commandId: $commandId) {
+      token
+      profile {
+        name
+        email
+        id
+      }
+    }
+  }
+}
+`;
+
 type Inputs = {
   mail: string;
   password: string;
 };
-
 
 export const AuthorizationForm = () => {
   const [, { login }] = useTokenContext();
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [addUser] = useMutation<Pick<Mutation, 'profile'>, AddUserVariables>(ADD_PROFILE);
 
   const {
     register,
@@ -32,20 +54,27 @@ export const AuthorizationForm = () => {
       password: "",
     },
   });
-  const addProfile = (newName: any,password: any) => dispatch(profileActions.set({newName,password}));
+  const addProfile = (newName: any, id: any) => dispatch(profileActions.set({ newName, id }));
 
   const customHandleSubmit = (values: any) => {
     const state = location.state as NavigationState;
-    login();
-    navigate(state?.from || '/');
-    addProfile(values.mail, values.password)
-    reset();
+    const email = values.mail
+    const password = values.password
+    const commandId = new Date().toISOString();
+    addUser({ variables: { email, password, commandId }, })
+      .then((res) => {
+        login();
+        navigate(state?.from || '/');
+        addProfile(res.data.profile.signup.profile.email, res.data.profile.signup.profile.id);
+        localStorage.setItem('token', res.data.profile.signup.token);
+        reset();
+      })
+      .catch((err) => { alert(err.message) });
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-      <h1>Форма авторизации</h1>
-
+      <h1>Форма регистрации</h1>
       <div className={styles.formInput}>
         <label htmlFor="mail">E-Mail</label>
         <input
@@ -75,7 +104,7 @@ export const AuthorizationForm = () => {
         {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
       </div>
       <hr />
-      <button type="submit" disabled={!isValid}>Авторизация</button>
+      <button type="submit" disabled={!isValid}>Зарегистрировать</button>
     </form>
   );
 };
