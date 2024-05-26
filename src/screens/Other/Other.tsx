@@ -1,37 +1,65 @@
 import React, { FC } from 'react';
 import { Frame } from 'src/components/Frame';
-import { useSomeModal } from 'src/components/Modals/SomeModal';
 import * as s from './styles.module.scss';
 import { Button } from 'src/components/Button/Button';
 import { ShopProductСart } from 'src/components/ShopProductСart/ShopProductСart';
-import { useTokenContext } from 'src/TokenProvider';
-import  { cartProductsActions, cartProductsSelectors} from 'src/store/cartProducts';
-import { useDispatch, useSelector } from 'react-redux';
+import { gql, useQuery } from '@apollo/client';
 
+const GET_ORDERS = gql`
+query Query($getOneId: ID!) {
+  orders {
+    getOne(id: $getOneId) {
+      id
+      products {
+        _id
+        product {
+          name
+          photo
+          desc
+          id
+          price
+        }
+      }
+    }
+  }
+}
+`;
 const Other: FC = () => {
-  const [, { open }] = useSomeModal();
-  const [token, { login }] = useTokenContext();
-  const dispatch = useDispatch();
-debugger
-  const listProducts = useSelector(cartProductsSelectors.get);
-  const removeProduct = () => dispatch(cartProductsActions.remove());
+  const orderId = localStorage.getItem('orderId')
+  if (!orderId) return (<div className={s.root}>
+    <Frame>
+      Корзина
+      <div>
+        <Button onClick={() => alert('Добавьте книгу в корзину')} label='Обновить' />
+      </div>
+    </Frame>
+  </div>)
 
-  console.log('Other screen token', token)
+  const { data, error, loading, refetch } = useQuery(GET_ORDERS, {
+    variables: { getOneId: orderId },
+  });
+  const listProducts = data && data.orders.getOne.products;
+  const updateData = () => {
+    setTimeout(() => { refetch() }, 100)
+  }
+
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>{error.message}</div>;
   return (
     <div className={s.root}>
       <Frame>
-      Корзина
-      <div>
-      {listProducts.map((product, index) => {
-          return (
-            <div>
-              <ShopProductСart key={product.id}  id={product.id} price={product.price} name={product.name} description={product.description} image={product.image}/>
-            </div>
-          )
-        })}
-      </div>
+        Корзина
         <div>
-          <Button onClick={() => open('content')} label='Добавить продукт'/>
+          {listProducts.map((order: any, index: any) => {
+            return (
+              <div>
+                <ShopProductСart key={order.product.id} id={order.product.id} price={order.product.price} name={order.product.name} description={order.product.desc} image={order.product.photo} refetch={updateData} />
+              </div>
+            )
+          })}
+        </div>
+        <div>
+          <Button onClick={() => updateData()} label='Обновить' />
         </div>
       </Frame>
     </div>

@@ -1,44 +1,94 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from './styles.module.scss';
-import { useTokenContext } from "src/TokenProvider";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { NavigationState } from 'src/navigation/types';
-import { useDispatch, useSelector } from "react-redux";
-import { profileActions, profileSelectors } from "src/store/profile";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import { Mutation } from "src/server.types";
 
-// типизация полей
 type Inputs = {
   mail: string;
-  password: string;
+  userName: string;
+  id?: string;
 };
 
+export type EditProfileVariables = {
+  email?: string;
+  name?: string;
+  id?: string;
+  signUpDate?: string;
+  input?: any;
+};
 
+const GET_PROFILE = gql`
+  query getProfile {
+    profile {
+      id
+      name
+      email
+    }
+  }
+`;
+const EDIT_PROFILE = gql`
+mutation Update($input: UpdateProfileInput!) {
+  profile {
+    update(input: $input) {
+      name
+    }
+  }
+}
+`;
 export const ProfileForm = () => {
-  const dispatch = useDispatch();
-  const profile= useSelector(profileSelectors.get)
-  const setProfile =  (id: any, newName: any,password: any) => dispatch(profileActions.edit({id, newName,password}));
-
+  const { data, error, loading } = useQuery(GET_PROFILE);
+  const [editProfile] = useMutation<Pick<Mutation, 'profile'>, EditProfileVariables>(
+    EDIT_PROFILE
+  );
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors, isValid },
   } = useForm<Inputs>({
     mode: "onBlur",
     defaultValues: {
-      mail: profile[0]['name'],
-      password: profile[0]['password'],
+      mail: data ? data.profile['email'] : '',
+      userName: data ? data.profile['name'] : '',
     },
   });
 
+  useEffect(() => {
+    if (data) {
+      setValue(
+        'mail', data.profile['email']
+      );
+      setValue(
+        'userName', data.profile['name']
+      );
+      setValue(
+        'id', data.profile['id']
+      );
+    }
+  }, [data]);
+
+
+  useEffect(() => {
+    localStorage.setItem('protectedMode', 'true');
+
+    return () => {
+      localStorage.setItem('protectedMode', '');
+
+    }
+  }, []);
+  
   const customHandleSubmit = (values: any) => {
-    alert(JSON.stringify(values))
-    setProfile(profile[0]['id'], values.mail, values.password)
-   // reset();
+    const input = {
+      "name": values.userName
+    };
+
+    editProfile({ variables: { input }, refetchQueries: [{ query: GET_PROFILE }], });
   };
 
-  return (
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>{error.message}</div>;
+  return (<>
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
       <h1>Редактирование профиля</h1>
 
@@ -58,20 +108,21 @@ export const ProfileForm = () => {
         {errors.mail && <p style={{ color: "red" }}>{errors.mail.message}</p>}
       </div>
       <div className={styles.formInput}>
-        <label htmlFor="password">Пароль</label>
-        <input id="password"
+        <label htmlFor="userName">Имя</label>
+        <input id="userName"
           type="text"
-          {...register("password", {
+          {...register("userName", {
             required: true,
             minLength: {
               value: 3,
               message: "Минумум 3 символа!",
             },
           })} />
-        {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
+        {errors.userName && <p style={{ color: "red" }}>{errors.userName.message}</p>}
       </div>
       <hr />
       <button type="submit" disabled={!isValid}>Редактировать</button>
     </form>
+  </>
   );
 };

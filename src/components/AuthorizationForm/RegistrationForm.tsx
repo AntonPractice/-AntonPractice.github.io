@@ -15,10 +15,10 @@ export type AddUserVariables = {
   commandId: string;
 };
 
-const SIGN_IN = gql`
-mutation Mutation($email: String!, $password: String!) {
+const ADD_PROFILE = gql`
+mutation Signup($email: String!, $password: String!, $commandId: String!) {
   profile {
-    signin(email: $email, password: $password) {
+    signup(email: $email, password: $password, commandId: $commandId) {
       token
       profile {
         name
@@ -35,12 +35,12 @@ type Inputs = {
   password: string;
 };
 
-export const AuthorizationForm = () => {
+export const RegistrationForm = () => {
   const [, { login }] = useTokenContext();
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [signIn] = useMutation<Pick<Mutation, 'profile'>, AddUserVariables>(SIGN_IN);
+  const [addUser] = useMutation<Pick<Mutation, 'profile'>, AddUserVariables>(ADD_PROFILE);
 
   const {
     register,
@@ -61,13 +61,13 @@ export const AuthorizationForm = () => {
     const email = values.mail
     const password = values.password
     const commandId = new Date().toISOString();
-    signIn({ variables: { email, password, commandId }, })
+    addUser({ variables: { email, password, commandId }, })
       .then((res) => {
         debugger
         login();
         navigate(state?.from || '/');
-        addProfile(res.data.profile.signin.profile.email, res.data.profile.signin.profile.id);
-        localStorage.setItem('token', res.data.profile.signin.token);
+        addProfile(res.data.profile.signup.profile.email, res.data.profile.signup.profile.id);
+        localStorage.setItem('token', res.data.profile.signup.token);
         reset();
       })
       .catch((err) => { alert(err.message) });
@@ -75,7 +75,7 @@ export const AuthorizationForm = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-      <h1>Форма авторизации</h1>
+      <h1>Форма регистрации</h1>
       <div className={styles.formInput}>
         <label htmlFor="mail">E-Mail</label>
         <input
@@ -105,7 +105,7 @@ export const AuthorizationForm = () => {
         {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
       </div>
       <hr />
-      <button type="submit" disabled={!isValid}>Войти</button>
+      <button type="submit" disabled={!isValid}>Зарегистрировать</button>
     </form>
   );
 };

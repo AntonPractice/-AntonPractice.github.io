@@ -23,7 +23,6 @@ export const useTokenContext = (): TokenContextType => useContext(TokenContext);
 export const TokenProvider: FC<TokenProviderProps> = ({ children }) => {
 
   const dispatch = useDispatch();
-  const profile= useSelector(profileSelectors.get)
   const clearProfile = () => dispatch(profileActions.remove());
 
   const tokenSelector = useSelector(tokenSelectors.get);
@@ -31,13 +30,15 @@ export const TokenProvider: FC<TokenProviderProps> = ({ children }) => {
   const clearToken = () => dispatch(tokenActions.clear());
   const [token, setToken] = useState<string>(tokenSelector);
 
-  
+
   useEffect(() => {
     if (token) {
       genToken()
     } else {
       clearProfile()
       clearToken()
+      localStorage.setItem('orderId','')
+      localStorage.setItem('protectedMode','')
     }
   }, [token]);
 

@@ -6,16 +6,13 @@ import { Frame } from 'src/components/Frame';
 import * as styles from './styles.module.scss';
 import { Button } from 'src/components/Button/Button';
 import { AuthorizationForm } from 'src/components/AuthorizationForm/AuthorizationForm';
+import { Authorization } from 'src/components/AuthorizationForm/Authorization';
 
 const Auth: FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [, { login }] = useTokenContext();
-
   return (
     <div className={styles.root}>
       <Frame>
-        <AuthorizationForm/>
+        <Authorization/>
       </Frame>
     </div>
   );
