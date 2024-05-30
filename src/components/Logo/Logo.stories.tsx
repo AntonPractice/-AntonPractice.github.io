@@ -1,15 +1,14 @@
-import type { Meta,StoryObj } from '@storybook/react';
-import  { Logo } from './Logo';
-
+import type { Meta, StoryObj } from '@storybook/react';
+import { Logo } from './Logo';
 
 const meta: Meta<typeof Logo> = {
   title: 'Logoneus',
-  component: Logo
+  component: Logo,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 export const Default = {
   args: {
@@ -17,4 +16,3 @@ export const Default = {
     label: 'Logoneus',
   },
 };
-

@@ -1,4 +1,3 @@
-
 import React, { FC, useContext, useLayoutEffect, useRef, useState } from 'react';
 import { InfinityList, InfinityListRef } from './InfinityList';
 
@@ -7,7 +6,7 @@ export interface IinfinityListProps {
 }
 
 export const InfinityListParent: FC<IinfinityListProps> = ({ itemHeight, ...props }) => {
-const count = 100
+  const count = 100;
   const [items, setItems] = useState(() =>
     Array(count)
       .fill('')

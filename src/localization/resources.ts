@@ -191,24 +191,32 @@ export const resources = {
           Friday: 'Friday',
           Saturday: 'Saturday',
           Sunday: 'Sunday',
-        }
+        },
       },
-      another:{
-        waitYou:'Waiting for you at:',
-        address:'Moscow, Bolshaya Lubyanka st., 2',
-        call:'Call:',
+      another: {
+        waitYou: 'Waiting for you at:',
+        address: 'Moscow, Bolshaya Lubyanka st., 2',
+        call: 'Call:',
       },
-      button:{
-        alertText:'Goodbye!!!',
-        theme:'Change the site theme to ',
-        dark:'dark',
-        light:'light',
+      button: {
+        alertText: 'Goodbye!!!',
+        theme: 'Change the site theme to ',
+        dark: 'dark',
+        light: 'light',
       },
-      header:{
-        welcome:'Welcome!!!',
-        address:'Москва, ул. Большая Лубянка, 2',
-        call:'Позвонить нам:',
-      }
+      header: {
+        welcome: 'Welcome!!!',
+        address: 'Москва, ул. Большая Лубянка, 2',
+        call: 'Позвонить нам:',
+        exit: 'Log out',
+      },
+      tabs: {
+        prodList: 'Product List',
+        myProducts: 'My products',
+        basket: 'Goods',
+        orders: 'Orders',
+        profile: 'Profile',
+      },
     },
   },
   ru: {
@@ -404,23 +412,30 @@ export const resources = {
           Sunday: 'Воскресенье',
         },
       },
-      another:{
-        waitYou:'Ждем вас по адресу:',
-        address:'Москва, ул. Большая Лубянка, 2',
-        call:'Позвонить нам:',
+      another: {
+        waitYou: 'Ждем вас по адресу:',
+        address: 'Москва, ул. Большая Лубянка, 2',
+        call: 'Позвонить нам:',
       },
-      button:{
-        alertText:'Прощай!!!',
-        theme:'сменить тему на ',
-        dark:'темную',
-        light:'светлую',
+      button: {
+        alertText: 'Прощай!!!',
+        theme: 'сменить тему на ',
+        dark: 'темная',
+        light: 'светлая',
       },
-      header:{
-        welcome:'Добро пожаловать!!!',
-        address:'Москва, ул. Большая Лубянка, 2',
-        call:'Позвонить нам:',
-      }
-
+      header: {
+        welcome: 'Добро пожаловать!!!',
+        address: 'Москва, ул. Большая Лубянка, 2',
+        call: 'Позвонить нам:',
+        exit: 'Выход',
+      },
+      tabs: {
+        prodList: 'Список товаров',
+        myProducts: 'Мои продукты',
+        basket: 'Корзина',
+        orders: 'Заказы',
+        profile: 'Профиль',
+      },
     },
   },
 };
