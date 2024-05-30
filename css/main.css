@@ -51,14 +51,6 @@ code {
     }
 }
 
-.layout__j0qOa{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 150vh;
-    background-color: var(--white-color-background);
-    box-sizing: border-box;
-}
 
 .storybook-header__d9GqU {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -106,6 +98,11 @@ code {
 .link-visited__XRK0J{
    color: '#fff'
  }
+ .welcome__MjI9g{
+  color: #333;
+    font-size: 14px;
+    margin-right: 10px;
+ }
 .story__i5p0q {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
@@ -151,6 +148,10 @@ code {
     ;
 
 }
+
+
+
+
 .story__JuoVb {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
@@ -194,36 +195,6 @@ code {
 }
 
 
-.background__QxqO5{
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    height: 90%;
-    width: 90%;
-    background-color: rgba(66, 57, 57, 0.5); 
-    overflow: hidden;
-}
-.modal-content__g3gIl{
-    display: block;
-    position: relative;
-    background-color: #F5F7FF;
-    padding: 40px 16px 16px 16px;
-    min-width: 200px;
-    min-height: 200px;
-
-}
-.button-close__rmB4a{
-    display: block;
-    position: absolute;
-    color:#10002b;
-    top:16px;
-    right: 16px;
-    transition: 0.2s linear;
-    cursor: pointer;
-    &:hover{
-        opacity: 0.5;    }
-}
 .form__iXiGa {
     font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 700;
@@ -251,10 +222,25 @@ code {
   padding: 0 20px;
   width: 100%;
 }
-.root__O7SGX{
+.root__zC8RW{
   padding: 20px;
   text-align: center;
 }
+.short-product-card__b7HgO {
+  display: block;
+  position: relative;
+  width:600px;
+  height: 100px;
+  padding: 26px 24px 20px 24px;
+  font-size: 13px;
+  color: var(--primary-color-text);
+  box-sizing: border-box;
+  transition: 0.2s linear;
+  background-color: var(--white-color-background);
+
+}
+
+
 .root__ohkFV{
   padding: 20px;
   text-align: center;
@@ -308,6 +294,15 @@ code {
     color: rgb(177, 189, 230);
     display: flex;
     flex-direction: column
+}
+.root__dUxyX{
+  padding: 20px;
+  text-align: center;
+  width:900px
+}
+.root__mWw0P{
+  padding: 20px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=main.css.map*/
