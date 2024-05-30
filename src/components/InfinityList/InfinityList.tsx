@@ -39,7 +39,7 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
   const root = useRef<HTMLDivElement>();
   const holder = useRef<HTMLDivElement>();
   const prevScrollTop = useRef<number>(null);
-  const reserve = 100
+  const reserve = 100;
   const [visibleItems, setVisibleItems] = useState<InfinityListVisibleItemType<T>[]>(() =>
     items.map((value, index) => ({ value, index }))
   );
@@ -64,7 +64,6 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
   const onStart = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-
         setItems((v: any[]) => {
           const min = v[0];
           return [
@@ -78,7 +77,7 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
         setTimeout(resolve);
       }, 200);
     });
-  }
+  };
   const applied = useRef<{ end: boolean; start: boolean }>({ end: false, start: false });
 
   const handleInfinityScroll = () => {
@@ -98,7 +97,7 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
               .fill('')
               .map((_, i) => max + i + 1),
           ];
-        })
+        });
         applied.current.end = false;
       } else if (prevScrollTop.current > root.current.scrollTop && topDiff <= reserve) {
         if (applied.current.end) return;
@@ -107,9 +106,7 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
         onStart().then(() => {
           applied.current.end = false;
           root.current.scrollBy({ top: holder.current.getBoundingClientRect().height - holderRect.height });
-
-        })
-
+        });
       }
     }
     prevScrollTop.current = root.current.scrollTop;
@@ -121,7 +118,6 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
   }, [visibleItems]);
 
   useLayoutEffect(commonCalc, [items, itemHeight, commonCalc]);
-
 
   useLayoutEffect(() => {
     let timeoutId: number;
@@ -145,7 +141,11 @@ export const InfinityList = <T, P extends { data: T } = { data: T }>({
       <div ref={holder} style={{ height: itemHeight * items.length }} className={cn(s.holder, 'InfinityList__holder')}>
         {visibleItems.map((item) => {
           return (
-            <div className={cn(s.item, 'InfinityList__item')} style={{ height: itemHeight, top: itemHeight * item.index }} key={item.index}>
+            <div
+              className={cn(s.item, 'InfinityList__item')}
+              style={{ height: itemHeight, top: itemHeight * item.index }}
+              key={item.index}
+            >
               <ItemElement data={item.value} />
             </div>
           );

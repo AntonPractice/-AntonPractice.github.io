@@ -12,18 +12,20 @@ const httpLink = createHttpLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('token');
-  const protectedMode = localStorage.getItem('protectedMode');
+  const unTokenMode = localStorage.getItem('unTokenMode');
   return {
     headers: {
       ...headers,
-      authorization: token && protectedMode ? `Bearer ${token}` : "",
-    }
-  }
+      authorization: !unTokenMode && token ? `Bearer ${token}` : '',
+    },
+  };
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
-export const ClientProvider: FC<ClientProps> = ({ children }) => <ApolloProvider client={client}>{children}</ApolloProvider>;
+export const ClientProvider: FC<ClientProps> = ({ children }) => (
+  <ApolloProvider client={client}>{children}</ApolloProvider>
+);

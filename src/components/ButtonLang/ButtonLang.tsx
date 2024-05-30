@@ -3,7 +3,6 @@ import * as styles from './styles.module.scss';
 import { ThemeContext } from '../Provider/ThemeProvider';
 import { useTranslation } from 'react-i18next';
 
-
 interface ButtonThemeProps {
   size?: string;
   label?: string;
@@ -11,31 +10,22 @@ interface ButtonThemeProps {
 }
 
 export const ButtonLang: FC<ButtonThemeProps> = () => {
-
   const [theme] = useContext(ThemeContext);
-  const { i18n } = useTranslation()
-  const lang = i18n.language
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
 
   const setRuLang = () => {
-    i18n.changeLanguage('ru')
-  }
+    i18n.changeLanguage('ru');
+  };
   const setEnuLang = () => {
-    i18n.changeLanguage('en')
-  }
+    i18n.changeLanguage('en');
+  };
   return (
     <div>
-      <button
-        type="button"
-        className={theme === 'dark' ? styles.storyDark : styles.story}
-        onClick={setRuLang}
-      >
+      <button type="button" className={theme === 'dark' ? styles.storyDark : styles.story} onClick={setRuLang}>
         {'RU'}
       </button>
-      <button
-        type="button"
-        className={theme === 'dark' ? styles.storyDark : styles.story}
-        onClick={setEnuLang}
-      >
+      <button type="button" className={theme === 'dark' ? styles.storyDark : styles.story} onClick={setEnuLang}>
         {'ENU'}
       </button>
     </div>

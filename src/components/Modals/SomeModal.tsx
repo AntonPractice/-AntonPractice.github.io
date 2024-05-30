@@ -19,16 +19,7 @@ export type SomeModalValue = {
 export type SomeModalType = [SomeModalValue, SomeModalCallbacks];
 
 export const useSomeModal = (): SomeModalType => {
-  const location = useLocation();
-
-  // useEffect(() => {
-  //   console.log(location.search, qs.parse(location.search));
-  // }, [location.search]);
-
   const [searchParams, setSearchParams] = useSearchParams();
-
-
-  // console.log(searchParams);
 
   const value = {
     visible: searchParams.has(SOME_MODAL_KEY),
@@ -54,7 +45,7 @@ export const SomeModal: FC = () => {
 
   return (
     <Modal visible={visible} onClose={close}>
-      <ProductForm/>
+      <ProductForm />
     </Modal>
   );
 };

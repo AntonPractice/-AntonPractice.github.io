@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoryFn , Meta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import Modal, { IModal } from './Modal';
 
 export default {
@@ -7,15 +7,15 @@ export default {
   component: Modal,
 } as Meta;
 
-const Template: StoryFn <IModal> = (args:IModal) => <Modal {...args} />;
+const Template: StoryFn<IModal> = (args: IModal) => <Modal {...args} />;
 
-let isOpen = true
+let isOpen = true;
 
 export const Default = Template.bind({});
 Default.args = {
   visible: isOpen,
   onClose: () => {
-    isOpen = !isOpen
+    isOpen = !isOpen;
   },
-  children: 'Можно заполнить аргумент в настройках'
-} as IModal;  
+  children: 'Можно заполнить аргумент в настройках',
+} as IModal;

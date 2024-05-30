@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import * as styles from './styles.module.scss';
-import { gql, useMutation, useQuery } from "@apollo/client";
-import { Mutation } from "src/server.types";
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { Mutation } from 'src/server.types';
+import { CircularProgress, TextField } from '@mui/material';
+import { FormInput } from '../FormInput/FormInput';
+import { DefaultButton } from '../Button/DefaultButton';
 
 type Inputs = {
   mail: string;
@@ -28,26 +31,24 @@ const GET_PROFILE = gql`
   }
 `;
 const EDIT_PROFILE = gql`
-mutation Update($input: UpdateProfileInput!) {
-  profile {
-    update(input: $input) {
-      name
+  mutation Update($input: UpdateProfileInput!) {
+    profile {
+      update(input: $input) {
+        name
+      }
     }
   }
-}
 `;
 export const ProfileForm = () => {
   const { data, error, loading } = useQuery(GET_PROFILE);
-  const [editProfile] = useMutation<Pick<Mutation, 'profile'>, EditProfileVariables>(
-    EDIT_PROFILE
-  );
+  const [editProfile] = useMutation<Pick<Mutation, 'profile'>, EditProfileVariables>(EDIT_PROFILE);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isValid },
   } = useForm<Inputs>({
-    mode: "onBlur",
+    mode: 'onBlur',
     defaultValues: {
       mail: data ? data.profile['email'] : '',
       userName: data ? data.profile['name'] : '',
@@ -56,73 +57,62 @@ export const ProfileForm = () => {
 
   useEffect(() => {
     if (data) {
-      setValue(
-        'mail', data.profile['email']
-      );
-      setValue(
-        'userName', data.profile['name']
-      );
-      setValue(
-        'id', data.profile['id']
-      );
+      setValue('mail', data.profile['email']);
+      setValue('userName', data.profile['name']);
+      setValue('id', data.profile['id']);
     }
   }, [data]);
 
-
-  useEffect(() => {
-    localStorage.setItem('protectedMode', 'true');
-
-    return () => {
-      localStorage.setItem('protectedMode', '');
-
-    }
-  }, []);
-  
   const customHandleSubmit = (values: any) => {
     const input = {
-      "name": values.userName
+      name: values.userName,
     };
 
-    editProfile({ variables: { input }, refetchQueries: [{ query: GET_PROFILE }], });
+    editProfile({ variables: { input }, refetchQueries: [{ query: GET_PROFILE }] });
   };
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <CircularProgress />;
   if (error) return <div>{error.message}</div>;
-  return (<>
-    <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-      <h1>Редактирование профиля</h1>
-
-      <div className={styles.formInput}>
-        <label htmlFor="mail">E-Mail</label>
-        <input
-          id="mail"
-          type="text"
-          {...register("mail", {
+  return (
+    <>
+      <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
+        <h1>Редактирование профиля</h1>
+        <FormInput
+          {...register('mail', {
             required: true,
             minLength: {
               value: 3,
-              message: "Минумум 3 символа!",
+              message: 'Минумум 3 символа!',
             },
           })}
-        />
-        {errors.mail && <p style={{ color: "red" }}>{errors.mail.message}</p>}
-      </div>
-      <div className={styles.formInput}>
-        <label htmlFor="userName">Имя</label>
-        <input id="userName"
+          id="mail"
           type="text"
-          {...register("userName", {
+          label="E-Mail"
+          name="mail"
+          error={errors.mail && !!errors.mail}
+          helperText={errors.mail && errors?.mail?.message}
+        />
+        <FormInput
+          {...register('userName', {
             required: true,
             minLength: {
               value: 3,
-              message: "Минумум 3 символа!",
+              message: 'Минумум 3 символа!',
             },
-          })} />
-        {errors.userName && <p style={{ color: "red" }}>{errors.userName.message}</p>}
-      </div>
-      <hr />
-      <button type="submit" disabled={!isValid}>Редактировать</button>
-    </form>
-  </>
+          })}
+          id="userName"
+          type="text"
+          label="Имя"
+          name="userName"
+          error={errors.userName && !!errors.userName}
+          helperText={errors.userName && errors?.userName?.message}
+        />
+        <hr />
+        <DefaultButton type="submit" disabled={!isValid}>
+          {' '}
+          Редактировать{' '}
+        </DefaultButton>
+      </form>
+    </>
   );
 };

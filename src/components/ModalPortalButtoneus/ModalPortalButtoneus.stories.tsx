@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoryFn , Meta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import ModalPortalButtoneus from './ModalPortalButtoneus';
 
 export default {
@@ -7,11 +7,7 @@ export default {
   component: ModalPortalButtoneus,
 } as Meta;
 
-const Template: StoryFn <{}> = () => <ModalPortalButtoneus  />;
-
-let isOpen = true
+const Template: StoryFn = () => <ModalPortalButtoneus />;
 
 export const Default = Template.bind({});
-Default.args = {
- 
-} ;  
+Default.args = {};
