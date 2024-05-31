@@ -70,18 +70,17 @@ const ProductList: FC = () => {
       refetch();
     }, 100);
   };
-  const updateCallback = useCallback(updateData, [updateData]);
 
   useEffect(() => {
     setTimeout(() => {
-      updateCallback();
+      updateData();
     }, 100);
     return () => {
       setTimeout(() => {
         localStorage.setItem('unTokenMode', '');
       }, 300);
     };
-  }, [updateCallback]);
+  }, []);
 
   const { data: dataCategory, error: errorCategory, loading: loadingCategory } = useQuery(GET_CATEGORIES);
 
