@@ -23,6 +23,7 @@ export interface ShopProductСartProps {
   name: string;
   description: string;
   addMode?: boolean;
+  noEdit?: boolean;
   adminMode?: boolean;
   refetch?: () => void;
 }
@@ -35,6 +36,7 @@ export const ShopProductСart: FC<ShopProductСartProps> = ({
   name,
   addMode,
   adminMode,
+  noEdit,
   refetch,
 }) => {
   const [theme] = useContext(ThemeContext);
@@ -77,31 +79,33 @@ export const ShopProductСart: FC<ShopProductСartProps> = ({
               <h3>{price + ' $'}</h3>
             </div>
             <>
-              {addMode ?
+              {addMode ? (
                 <IconButton color="primary">
                   <AddIcon style={{ padding: '10px' }} onClick={addCartProduct} />
                 </IconButton>
-                :
+              ) : (
                 <IconButton color="primary">
                   <DeleteOutlineSharpIcon style={{ padding: '10px' }} onClick={removeCartProduct} />
                 </IconButton>
-
-              }
+              )}
             </>
             <>
-              {adminMode &&
-                <IconButton color="primary">
-                  <EditIcon
-                    style={{ padding: '10px' }}
-                    onClick={() => {
-                      setVisible(true);
-                    }}
-                  />
-                </IconButton>
-              }</>
+              {noEdit
+                ? null
+                : adminMode && (
+                    <IconButton color="primary">
+                      <EditIcon
+                        style={{ padding: '10px' }}
+                        onClick={() => {
+                          setVisible(true);
+                        }}
+                      />
+                    </IconButton>
+                  )}
+            </>
           </div>
         </div>
-      </div >
+      </div>
     </>
   );
 };

@@ -6,6 +6,7 @@ import Modal from '../Modal/Modal';
 import { ProductForm } from '../ProductForm/ProductForm';
 import { useDispatch } from 'react-redux';
 import { cartProductsActions } from 'src/store/cartProducts';
+import { IconButton } from '@mui/material';
 
 export type EditProductVariables = {
   putId?: string;
@@ -61,10 +62,17 @@ export const CartProducts: FC<ShopProductСartProps> = ({ id, price, image, desc
           <div>
             <h3>{name}</h3>{' '}
           </div>
-          <div>
-            <h3>{price + ' $'}</h3>
+          <div style={{ width: '300px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <div>
+              <h3>{price + ' $'}</h3>
+            </div>
+            {noDell ? null : (
+              <IconButton color="primary">
+                {' '}
+                <DeleteOutlineSharpIcon style={{ padding: '10px' }} onClick={removeCartProduct} />{' '}
+              </IconButton>
+            )}
           </div>
-          {noDell ? null : <DeleteOutlineSharpIcon style={{ padding: '10px' }} onClick={removeCartProduct} />}
         </div>
       </div>
     </>
