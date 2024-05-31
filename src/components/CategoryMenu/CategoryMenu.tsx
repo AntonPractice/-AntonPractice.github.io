@@ -2,13 +2,14 @@ import React, { FC } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { useTranslation } from 'react-i18next';
 
 export const CategoryMenu: FC<{ setNameCategory?: (val: string) => void; categories: [] }> = ({
   setNameCategory,
   categories,
 }) => {
   // localStorage.setItem('unTokenMode', 'true');
-
+  const { t } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,7 +29,7 @@ export const CategoryMenu: FC<{ setNameCategory?: (val: string) => void; categor
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          Выберите категорию
+         {t('prodList.category')} 
         </Button>
         <Menu
           id="category-menu"

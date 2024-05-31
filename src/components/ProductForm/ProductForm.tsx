@@ -3,6 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as styles from './styles.module.scss';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Mutation } from 'src/server.types';
+import { FormInput } from '../FormInput/FormInput';
+import { DefaultButton } from '../Button/DefaultButton';
 
 export type EditProductVariables = {
   putId?: string;
@@ -118,57 +120,63 @@ export const ProductForm: FC<IProductForm> = ({ id, price, image, description, n
   if (error) return <div>{error.message}</div>;
   return (
     <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-      <h1>Добавление/Редактирование продукта</h1>
-      <div className={styles.formInput}>
-        <label htmlFor="name">Наименование</label>
-        <input
-          id="name"
-          type="text"
-          {...register('name', {
-            required: true,
-            minLength: {
-              value: 3,
-              message: 'Минумум 3 символа!',
-            },
-          })}
-        />
-        {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
-      </div>
-      <div className={styles.formInput}>
-        <label htmlFor="description">Описание</label>
-        <input
-          id="description"
-          type="text"
-          {...register('description', {
-            required: true,
-            minLength: {
-              value: 3,
-              message: 'Минумум 3 символа!',
-            },
-          })}
-        />
-        {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
-      </div>
-      <div className={styles.formInput}>
-        <label htmlFor="price">Цена</label>
-        <input
-          id="price"
-          type="number"
-          {...register('price', {
-            required: true,
-          })}
-        />
-        {errors.price && <p style={{ color: 'red' }}>{errors.price.message}</p>}
-      </div>
-      <div className={styles.formInput}>
-        <label htmlFor="img">Ссылка на иллюстрацию</label>
-        <input id="img" type="text" {...register('img')} />
-        {errors.img && <p style={{ color: 'red' }}>{errors.img.message}</p>}
-      </div>
+      <h1>Редактирование продукта</h1>
+      <FormInput
+        {...register('name', {
+          required: true,
+          minLength: {
+            value: 3,
+            message: 'Минумум 3 символа!',
+          },
+        })}
+        id="name"
+        type="text"
+        label="Наименование"
+        name="name"
+        error={errors.name && !!errors.name}
+        helperText={errors.name && errors?.name?.message}
+      />
+      <FormInput
+        {...register('description', {
+          required: true,
+          minLength: {
+            value: 3,
+            message: 'Минумум 3 символа!',
+          },
+        })}
+        id="description"
+        type="text"
+        label="Описание"
+        name="description"
+        error={errors.description && !!errors.description}
+        helperText={errors.description && errors?.description?.message}
+      />
+      <FormInput
+        {...register('price', {
+          required: true,
+        })}
+        id="price"
+        type="number"
+        label="Цена"
+        name="price"
+        error={errors.price && !!errors.price}
+        helperText={errors.price && errors?.price?.message}
+      />
+      <FormInput
+        {...register('img', {
+          required: true,
+        })}
+        id="img"
+        type="text"
+        label="Ссылка на иллюстрацию"
+        name="img"
+        error={errors.img && !!errors.img}
+        helperText={errors.img && errors?.img?.message}
+      />
       <hr />
-      <button type="submit" disabled={!isValid}>
-        Отправить
-      </button>
+      <DefaultButton type="submit" disabled={!isValid}>
+        Добавить
+      </DefaultButton>
     </form>
   );
 };
