@@ -6,6 +6,7 @@ import { Mutation } from 'src/server.types';
 import { CircularProgress } from '@mui/material';
 import { FormInput } from '../FormInput/FormInput';
 import { DefaultButton } from '../Button/DefaultButton';
+import { useTranslation } from 'react-i18next';
 
 type Inputs = {
   mail: string;
@@ -40,7 +41,9 @@ const EDIT_PROFILE = gql`
   }
 `;
 export const ProfileForm = () => {
-  const { data, error, loading } = useQuery(GET_PROFILE);
+  const { t } = useTranslation();
+
+  const { data, error, loading, refetch } = useQuery(GET_PROFILE);
   const [editProfile] = useMutation<Pick<Mutation, 'profile'>, EditProfileVariables>(EDIT_PROFILE);
   const {
     register,
@@ -63,6 +66,19 @@ export const ProfileForm = () => {
     }
   }, [data]);
 
+  const updateData = () => {
+    setTimeout(() => {
+      refetch();
+    }, 100);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      updateData();
+    }, 100);
+  }, []);
+
+
   const customHandleSubmit = (values: any) => {
     const input = {
       name: values.userName,
@@ -76,7 +92,7 @@ export const ProfileForm = () => {
   return (
     <>
       <form className={styles.form} onSubmit={handleSubmit(customHandleSubmit)}>
-        <h1>Редактирование профиля</h1>
+        <h1>{t('profile.edit')}</h1>
         <FormInput
           {...register('mail', {
             required: true,
@@ -109,7 +125,7 @@ export const ProfileForm = () => {
         />
         <hr />
         <DefaultButton type="submit" disabled={!isValid}>
-          Редактировать
+        {t('profile.ed')}
         </DefaultButton>
       </form>
     </>

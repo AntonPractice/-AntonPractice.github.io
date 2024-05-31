@@ -10,6 +10,7 @@ import { Mutation } from 'src/server.types';
 import { profileSelectors } from 'src/store/profile';
 import { Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
+import { useTranslation } from 'react-i18next';
 
 export type EditProductVariables = {
   putId?: string;
@@ -35,6 +36,7 @@ const ADD_ORDER = gql`
 const Basket: FC = () => {
   const listProducts = useSelector(cartProductsSelectors.get);
   const [createOrder] = useMutation<Pick<Mutation, 'orders'>, EditProductVariables>(ADD_ORDER);
+  const { t } = useTranslation();
 
   const profile = useSelector(profileSelectors.get);
   const LoginName = profile && profile[0] ? profile[0]['name'] : '';
@@ -61,7 +63,7 @@ const Basket: FC = () => {
   return (
     <div className={s.root}>
       <Frame>
-        <h1>Товары в корзине</h1>
+        <h1>{t('goods.basket')}</h1>
         <div>
           {listProducts.map((product: any) => {
             return (
@@ -77,7 +79,7 @@ const Basket: FC = () => {
           })}
         </div>
         {LoginName ? (
-          <DefaultButton label={'Оформить заказ'} disabled={listProducts.length == 0} onClick={addProduct} />
+          <DefaultButton label={t('goods.order')} disabled={listProducts.length == 0} onClick={addProduct} />
         ) : (
           <Tooltip
             title="Для оформления заказа необходимо зарегистрироваться"

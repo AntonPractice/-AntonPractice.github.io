@@ -8,6 +8,7 @@ import { gql, useQuery } from '@apollo/client';
 import { AddProductForm } from '../ProductForm/AddProductForm';
 import { CircularProgress, Pagination } from '@mui/material';
 import { Product } from 'src/server.types';
+import { useTranslation } from 'react-i18next';
 
 const GET_PRODUCTS = gql`
   query Data($input: ProductGetManyInput) {
@@ -34,6 +35,7 @@ const GET_PRODUCTS = gql`
 
 export const ProfileShopProducts: FC = () => {
   const [page, setPage] = useState<number>(1);
+  const { t } = useTranslation();
 
   const input = {
     pagination: {
@@ -49,7 +51,7 @@ export const ProfileShopProducts: FC = () => {
 
   const listProducts = data && data.products.getMany.data;
   const listPagination = data && data.products.getMany.pagination;
-  const total_pages = listPagination && Math.ceil(listPagination.total / 6);
+  const total_pages = listPagination && Math.ceil(listPagination.total / 5);
 
   const profile = useSelector(profileSelectors.get);
   const targetRef = useRef<HTMLDivElement | null>(null);
@@ -97,7 +99,7 @@ export const ProfileShopProducts: FC = () => {
       <div style={{ display: 'flex' }}>
         <Pagination count={total_pages} page={page} onChange={handleChange} />
       </div>
-      {adminResp && <DefaultButton label={'Добавить новый продукт'} onClick={() => setVisible(true)} />}
+      {adminResp ? <DefaultButton label={t('myProducts.add')} onClick={() => setVisible(true)} /> :'Для добавления нового продукта нужно быть администратором'}
       <Modal visible={visible} onClose={() => setVisible(false)}>
         <AddProductForm
           addAdminMode

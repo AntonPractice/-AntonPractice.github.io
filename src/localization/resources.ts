@@ -217,6 +217,28 @@ export const resources = {
         orders: 'Orders',
         profile: 'Profile',
       },
+      prodList: {
+        category: 'Category',
+      },
+      myProducts: {
+        add: 'Add new product',
+      },
+      goods: {
+        basket: 'Your Goods',
+        order: 'Create Order'
+      },
+      orders: {
+        label: 'List Orders',
+        refresh: 'Refresh',
+        dell: 'Delete all',
+        del: 'Delete',
+        identificator: 'Identificator',
+      },
+      profile: {
+        edit: 'Edit profile',
+        ed: 'Edit',
+      }
+
     },
   },
   ru: {
@@ -436,6 +458,27 @@ export const resources = {
         orders: 'Заказы',
         profile: 'Профиль',
       },
+      prodList: {
+        category: 'Выберите категорию',
+      },
+      myProducts: {
+        add: 'Добавить новый продукт',
+      },
+      goods: {
+        basket: 'Товары в корзине',
+        order: 'Оформить заказ'
+      },
+      orders: {
+        label: 'Список заказов',
+        refresh: 'Обновить',
+        dell: 'Удалить все заказы',
+        del: 'Удалить заказ',
+        identificator: 'Идентификатор заказа',
+      },
+      profile: {
+        edit: 'Редактирование профиля',
+        ed: 'Редактировать',
+      }
     },
   },
 };

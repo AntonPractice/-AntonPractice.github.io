@@ -111,8 +111,7 @@ export const AuthorizationForm = () => {
       />
       <hr />
       <DefaultButton type="submit" disabled={!isValid}>
-        {' '}
-        Войти{' '}
+        Войти
       </DefaultButton>
     </form>
   );

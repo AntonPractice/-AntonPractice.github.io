@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { Mutation } from 'src/server.types';
 import { profileSelectors } from 'src/store/profile';
 import OrdersList from './OrdersList';
+import { useTranslation } from 'react-i18next';
 
 export type EditProductVariables = {
   putId?: string;
@@ -49,6 +50,7 @@ const REMOVE_ORDER = gql`
 const Order: FC = () => {
   const profile = useSelector(profileSelectors.get);
   const userId = profile && profile[0] ? profile[0]['id'] : '';
+  const { t } = useTranslation();
 
   const [removeOrderProduct] = useMutation<Pick<Mutation, 'orders'>, EditProductVariables>(REMOVE_ORDER);
 
@@ -98,7 +100,7 @@ const Order: FC = () => {
   return (
     <div className={s.root}>
       <Frame>
-        <h1>Список заказов</h1>
+        <h1>{t('orders.label')}</h1>
         <div>
           {listOrders.map((order: any) => {
             return (
@@ -106,16 +108,16 @@ const Order: FC = () => {
                 key={order.id}
                 style={{ backgroundColor: 'rgb(128 171 255 / 30%)', borderRadius: '10px', marginBottom: '5px' }}
               >
-                <div>{'Идентификатор заказа --' + order.id}</div>
+                <div>{t('orders.identificator')+' --' + order.id}</div>
                 <OrdersList key={order.id} listProducts={order.products} />
-                <DefaultButton onClick={() => removeCartProduct(order.id)} label="Удалить заказ" />
+                <DefaultButton onClick={() => removeCartProduct(order.id)} label= {t('orders.del')} />
               </div>
             );
           })}
         </div>
         <div>
-          <DefaultButton onClick={() => updateData()} label="Обновить" />
-          <DefaultButton onClick={() => removeAll(listOrders)} label="Удалить все заказы" />
+          <DefaultButton onClick={() => updateData()} label={t('orders.refresh')} />
+          <DefaultButton onClick={() => removeAll(listOrders)} label={t('orders.dell')} />
         </div>
       </Frame>
     </div>
