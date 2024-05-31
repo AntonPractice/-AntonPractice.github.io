@@ -67,6 +67,8 @@ const ProductList: FC = () => {
       refetch();
     }, 100);
   };
+
+
   useEffect(() => {
     setTimeout(() => {
       updateData();

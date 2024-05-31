@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as styles from './styles.module.scss';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { Mutation } from 'src/server.types';
-import { CircularProgress, TextField } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { FormInput } from '../FormInput/FormInput';
 import { DefaultButton } from '../Button/DefaultButton';
 
@@ -109,8 +109,7 @@ export const ProfileForm = () => {
         />
         <hr />
         <DefaultButton type="submit" disabled={!isValid}>
-          {' '}
-          Редактировать{' '}
+          Редактировать
         </DefaultButton>
       </form>
     </>

@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { OrdersCart } from './OrdersCart';
 
-// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof OrdersCart> = {
   title: 'ShopProduct Сarteus',
   component: OrdersCart,
@@ -9,9 +8,6 @@ const meta: Meta<typeof OrdersCart> = {
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
-
-// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default = {
   args: {
     image:

@@ -8,6 +8,7 @@ import Modal from '../Modal/Modal';
 import { ProductForm } from '../ProductForm/ProductForm';
 import { useDispatch } from 'react-redux';
 import { cartProductsActions } from 'src/store/cartProducts';
+import IconButton from '@mui/material/IconButton';
 
 export type EditProductVariables = {
   putId?: string;
@@ -71,24 +72,36 @@ export const ShopProductСart: FC<ShopProductСartProps> = ({
           <div>
             <h3>{name}</h3>{' '}
           </div>
-          <div>
-            <h3>{price + ' $'}</h3>
+          <div style={{ width: '300px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <div>
+              <h3>{price + ' $'}</h3>
+            </div>
+            <>
+              {addMode ?
+                <IconButton color="primary">
+                  <AddIcon style={{ padding: '10px' }} onClick={addCartProduct} />
+                </IconButton>
+                :
+                <IconButton color="primary">
+                  <DeleteOutlineSharpIcon style={{ padding: '10px' }} onClick={removeCartProduct} />
+                </IconButton>
+
+              }
+            </>
+            <>
+              {adminMode &&
+                <IconButton color="primary">
+                  <EditIcon
+                    style={{ padding: '10px' }}
+                    onClick={() => {
+                      setVisible(true);
+                    }}
+                  />
+                </IconButton>
+              }</>
           </div>
-          {addMode ? (
-            <AddIcon style={{ padding: '10px' }} onClick={addCartProduct} />
-          ) : (
-            <DeleteOutlineSharpIcon style={{ padding: '10px' }} onClick={removeCartProduct} />
-          )}
-          {adminMode && (
-            <EditIcon
-              style={{ padding: '10px' }}
-              onClick={() => {
-                setVisible(true);
-              }}
-            />
-          )}
         </div>
-      </div>
+      </div >
     </>
   );
 };

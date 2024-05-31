@@ -8,7 +8,7 @@
     "extends": [
         "plugin:react/jsx-runtime", // позволяет не импортировать реакт
         "plugin:react-hooks/recommended", //поддержка хуков
-        "plugin:import/recommended", // подсказки при импорте
+        // "plugin:import/recommended", // подсказки при импорте
         // "airbnb",
         "prettier", // отключает конфликты с prettier
         "plugin:prettier/recommended",
@@ -30,7 +30,8 @@
         "@typescript-eslint/no-var-requires": 0,
         "@typescript-eslint/triple-slash-reference": "error",
         "react/jsx-uses-vars": "error",
-        "react/jsx-uses-react": "error"
+        "react/jsx-uses-react": "error",
+        "react/prop-types": "off"
     },
     "settings": {
         "react": {

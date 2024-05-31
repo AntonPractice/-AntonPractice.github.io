@@ -3,7 +3,7 @@ import { Frame } from 'src/components/Frame';
 import * as s from './styles.module.scss';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { DefaultButton } from 'src/components/Button/DefaultButton';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Mutation } from 'src/server.types';
 import { profileSelectors } from 'src/store/profile';
 import OrdersList from './OrdersList';
@@ -89,7 +89,7 @@ const Order: FC = () => {
       removeCartProduct(el.id);
     });
   };
-  
+
   if (loading) return <div>loading...</div>;
   if (error) return <div>{error.message}</div>;
   return (
@@ -97,7 +97,7 @@ const Order: FC = () => {
       <Frame>
         <h1>Список заказов</h1>
         <div>
-          {listOrders.map((order: any, index: any) => {
+          {listOrders.map((order: any) => {
             return (
               <div
                 key={order.id}

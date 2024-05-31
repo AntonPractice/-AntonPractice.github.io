@@ -7,17 +7,13 @@ import { ThemeContext } from '../Provider/ThemeProvider';
 import { useTranslation } from 'react-i18next';
 import { ButtonLang } from '../ButtonLang/ButtonLang';
 import { useTokenContext } from 'src/TokenProvider';
-import { Link, NavLink, NavLinkProps } from 'react-router-dom';
+import { Link, NavLinkProps } from 'react-router-dom';
 import cn from 'clsx';
 import Tabs from '@mui/material/Tabs';
 import { IconButton, Tab } from '@mui/material';
 import { profileSelectors } from 'src/store/profile';
 import { useSelector } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
-
-interface HeaderProps {
-  size?: string;
-}
 
 export const getClassName: NavLinkProps['className'] = ({ isActive }) => {
   if (isActive) {
@@ -27,7 +23,7 @@ export const getClassName: NavLinkProps['className'] = ({ isActive }) => {
   }
 };
 
-export const Header: FC<HeaderProps> = ({ size, ...props }) => {
+export const Header: FC = () => {
   const [theme] = useContext(ThemeContext);
   const { t } = useTranslation();
   const [, { logout }] = useTokenContext();

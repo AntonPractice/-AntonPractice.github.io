@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useContext, useState } from 'react';
+import React, { FC, ReactNode, useContext } from 'react';
 import * as styles from './styles.module.scss';
 import { ThemeContext } from '../Provider/ThemeProvider';
 import { Button } from '@mui/material';

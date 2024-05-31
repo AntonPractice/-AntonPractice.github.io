@@ -70,7 +70,7 @@ const Basket: FC = () => {
       <Frame>
         <h1>Товары в корзине</h1>
         <div>
-          {listProducts.map((product: any, index: any) => {
+          {listProducts.map((product: any) => {
             return (
               <CartProducts
                 key={product.id}

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as styles from './styles.module.scss';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { Mutation } from 'src/server.types';
 
 export type EditProductVariables = {

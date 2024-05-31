@@ -4,7 +4,7 @@ import { ProfileForm } from 'src/components/ProfileForm/ProfileForm';
 import { useTokenContext } from 'src/TokenProvider';
 
 const ProfileScreen: FC = () => {
-  const [token, { login }] = useTokenContext();
+  const [token] = useTokenContext();
   console.log('ProfileScreen  token', token);
 
   return (

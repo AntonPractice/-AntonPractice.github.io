@@ -1,4 +1,4 @@
-import React, { FC, createContext, useEffect, useState } from 'react';
+import React, { FC, createContext, useState } from 'react';
 
 const ThemeContext = createContext(null);
 interface ThemeProviderProps {

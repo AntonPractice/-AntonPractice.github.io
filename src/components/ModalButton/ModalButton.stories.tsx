@@ -9,7 +9,5 @@ export default {
 
 const Template: StoryFn = () => <ModalButton />;
 
-const isOpen = true;
-
 export const Default = Template.bind({});
 Default.args = {};

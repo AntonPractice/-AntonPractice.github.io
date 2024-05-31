@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import { ProfileForm } from './ProfileForm';
 
 const meta: Meta<typeof ProfileForm> = {
@@ -7,8 +7,6 @@ const meta: Meta<typeof ProfileForm> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
 
 export const Default = {
   args: {
