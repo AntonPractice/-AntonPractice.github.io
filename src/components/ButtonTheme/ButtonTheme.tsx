@@ -1,12 +1,11 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import * as styles from './styles.module.scss';
 import { ThemeContext } from '../Provider/ThemeProvider';
-import { useTranslation } from 'react-i18next';
 import { FormControlLabel, FormGroup, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 
-export const ButtonTheme: FC<{}> = () => {
+export const ButtonTheme: FC = () => {
   const [theme, setTheme] = useContext(ThemeContext);
 
   const toggleTheme = () => {

@@ -1,9 +1,7 @@
-import React, { FC, HTMLProps, ReactNode, useContext } from 'react';
+import React, { FC } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { gql, useQuery } from '@apollo/client';
-import CircularProgress from '@mui/material/CircularProgress';
 
 export const CategoryMenu: FC<{ setNameCategory?: (val: string) => void; categories: [] }> = ({
   setNameCategory,

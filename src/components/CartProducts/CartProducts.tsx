@@ -1,16 +1,11 @@
 import React, { FC, useContext, useState } from 'react';
 import * as styles from './styles.module.scss';
-import AddIcon from '@mui/icons-material/Add';
 import { ThemeContext } from '../Provider/ThemeProvider';
 import DeleteOutlineSharpIcon from '@mui/icons-material/DeleteOutlineSharp';
-import EditIcon from '@mui/icons-material/Edit';
 import Modal from '../Modal/Modal';
 import { ProductForm } from '../ProductForm/ProductForm';
-import { gql, useMutation, useQuery } from '@apollo/client';
-import { Mutation } from 'src/server.types';
 import { useDispatch } from 'react-redux';
 import { cartProductsActions } from 'src/store/cartProducts';
-import { DefaultButton } from '../Button/DefaultButton';
 
 export type EditProductVariables = {
   putId?: string;
@@ -18,35 +13,6 @@ export type EditProductVariables = {
   removeId?: string;
 };
 
-const ADD_ORDER = gql`
-  mutation Add($input: OrderAddInput!) {
-    orders {
-      add(input: $input) {
-        id
-      }
-    }
-  }
-`;
-const REMOVE_ORDER = gql`
-  mutation Mutation($removeId: ID!) {
-    orders {
-      remove(id: $removeId) {
-        products {
-          _id
-        }
-      }
-    }
-  }
-`;
-const UPDATE_ORDER = gql`
-  mutation Put($putId: ID!, $input: OrderUpdateInput!) {
-    orders {
-      put(id: $putId, input: $input) {
-        id
-      }
-    }
-  }
-`;
 export interface ShopProductСartProps {
   id?: string;
   price: number;

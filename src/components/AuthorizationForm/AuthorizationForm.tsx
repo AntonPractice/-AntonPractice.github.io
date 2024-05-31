@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as styles from './styles.module.scss';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { NavigationState } from 'src/navigation/types';
-import { profileActions, profileSelectors } from 'src/store/profile';
-import { useDispatch, useSelector } from 'react-redux';
+import { profileActions } from 'src/store/profile';
+import { useDispatch } from 'react-redux';
 import { gql, useMutation } from '@apollo/client';
 import { Mutation } from 'src/server.types';
 import { DefaultButton } from '../Button/DefaultButton';
@@ -56,7 +56,7 @@ export const AuthorizationForm = () => {
       password: '',
     },
   });
-  const addProfile = (newName: any, id: any) => dispatch(profileActions.set({ newName, id }));
+  const addProfile = (newName: string, id: string) => dispatch(profileActions.set({ newName, id }));
 
   const customHandleSubmit = (values: any) => {
     const state = location.state as NavigationState;

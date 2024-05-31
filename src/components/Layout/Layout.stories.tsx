@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import Layout from './Layout';
 
 const meta: Meta<typeof Layout> = {
@@ -7,8 +7,6 @@ const meta: Meta<typeof Layout> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
 
 export const Default = {
   args: {

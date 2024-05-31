@@ -1,4 +1,4 @@
-import React, { createContext, FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, FC, useContext, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions, tokenSelectors } from 'src/store/token';
 import { profileActions } from 'src/store/profile';

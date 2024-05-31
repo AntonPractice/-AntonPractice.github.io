@@ -4,3 +4,5 @@ import React, { forwardRef } from 'react';
 export const FormInput = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   return <TextField variant="outlined" margin="normal" inputRef={ref} fullWidth {...props} />;
 });
+
+FormInput.displayName = 'FormInput';

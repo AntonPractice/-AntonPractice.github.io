@@ -1,4 +1,4 @@
-import React, { FC, HTMLProps, ReactNode, useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import * as styles from './styles.module.scss';
 import DeleteOutlineSharpIcon from '@mui/icons-material/DeleteOutlineSharp';
 import { ThemeContext } from '../Provider/ThemeProvider';
@@ -11,7 +11,7 @@ interface MainProductProps {
   price?: number;
 }
 
-export const MainProduct: FC<MainProductProps> = ({ category, title, description, imageLink, price, ...props }) => {
+export const MainProduct: FC<MainProductProps> = ({ category, title, description, imageLink, price }) => {
   const [theme] = useContext(ThemeContext);
 
   return (

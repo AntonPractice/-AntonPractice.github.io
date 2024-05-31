@@ -4,7 +4,7 @@ import { CartProducts } from 'src/components/CartProducts/CartProducts';
 const OrdersList: FC<{ listProducts: any }> = ({ listProducts }) => {
   return (
     <>
-      {listProducts.map((el: any, index: any) => {
+      {listProducts.map((el: any) => {
         return (
           <CartProducts
             noDell

@@ -7,7 +7,7 @@ interface ProductCartIconProps {
   count?: number;
 }
 
-export const ProductCartIcon: FC<ProductCartIconProps> = ({ count, ...props }) => {
+export const ProductCartIcon: FC<ProductCartIconProps> = ({ count }) => {
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>

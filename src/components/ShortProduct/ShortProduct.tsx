@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import * as styles from './styles.module.scss';
 import DeleteOutlineSharpIcon from '@mui/icons-material/DeleteOutlineSharp';
 import { ThemeContext } from '../Provider/ThemeProvider';
@@ -15,7 +15,7 @@ const trunscateString = (value: string, maxSize: number): string => {
   else return value.substring(0, maxSize - 3) + '...';
 };
 
-export const ShortProduct: FC<IShortProductCardProps> = ({ price, image, description, name, ...props }) => {
+export const ShortProduct: FC<IShortProductCardProps> = ({ price, image, description, name }) => {
   const [theme] = useContext(ThemeContext);
 
   return (

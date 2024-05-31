@@ -1,5 +1,4 @@
-import React, { FC, useContext } from 'react';
-import { ThemeContext } from '../Provider/ThemeProvider';
+import React, { FC } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
@@ -10,8 +9,6 @@ export interface IModal {
 }
 
 const Modal: FC<IModal> = ({ visible, onClose, children }) => {
-  const [theme] = useContext(ThemeContext);
-
   if (!visible) return null;
   return (
     <>

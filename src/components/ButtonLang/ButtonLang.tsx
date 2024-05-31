@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import * as styles from './styles.module.scss';
 import { ThemeContext } from '../Provider/ThemeProvider';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ interface ButtonThemeProps {
 export const ButtonLang: FC<ButtonThemeProps> = () => {
   const [theme] = useContext(ThemeContext);
   const { i18n } = useTranslation();
-  const lang = i18n.language;
 
   const setRuLang = () => {
     i18n.changeLanguage('ru');
