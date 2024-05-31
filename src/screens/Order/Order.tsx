@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { Frame } from 'src/components/Frame';
 import * as s from './styles.module.scss';
 import { gql, useMutation, useQuery } from '@apollo/client';
@@ -60,18 +60,21 @@ const Order: FC = () => {
     },
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      updateData();
-    }, 100);
-  }, []);
-
   const listOrders = data && data.orders.getMany.data;
   const updateData = () => {
     setTimeout(() => {
       refetch();
     }, 100);
   };
+
+  const updateCallback = useCallback(updateData, [updateData]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      updateCallback();
+    }, 100);
+  }, [updateCallback]);
+
   const removeCartProduct: any = (order: any) => {
     const removeId = order;
     removeOrderProduct({ variables: { removeId } })

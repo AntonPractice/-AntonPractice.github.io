@@ -1,46 +1,38 @@
 import React, { FC, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ShopProductСart } from '../ShopProductСart/ShopProductСart';
-import { DefaultButton } from '../Button/DefaultButton';
 import Modal from '../Modal/Modal';
 import { profileSelectors } from 'src/store/profile';
 import { AddProductForm } from '../ProductForm/AddProductForm';
-
-interface Product {
-  price?: number;
-  id?: string;
-  name?: string;
-  image?: string;
-  description?: string;
-}
+import { Pagination } from '@mui/material';
+import { Product } from 'src/server.types';
 
 export interface ListShopProductProductСartProps {
   data?: [];
   setPage?: (val: any) => void;
   updateData?: () => void;
   page?: number;
+  listPagination?: any;
 }
 
-export const createRandomProduct = (createdAt: string): Product => {
-  const rundomProductId: string = Math.random().toString(16).slice(-8);
-  return {
-    id: createdAt,
-    name: 'Product_' + rundomProductId,
-    image: 'IMG_' + rundomProductId,
-    price: Math.floor(Math.random() * 10000),
-    description: 'Description' + rundomProductId,
-  };
-};
-
-export const ListShopProduct: FC<ListShopProductProductСartProps> = ({ data, setPage, updateData, page }) => {
+export const ListShopProduct: FC<ListShopProductProductСartProps> = ({
+  data,
+  setPage,
+  updateData,
+  page,
+  listPagination,
+}) => {
   localStorage.setItem('unTokenMode', 'true');
 
   const profile = useSelector(profileSelectors.get);
   const targetRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
-
   const adminResp = profile[0] ? profile[0]['name'].includes('admin') : false;
   const [visible, setVisible] = useState<boolean>(false);
+  const total_pages = Math.ceil(listPagination.total / 6);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   return (
     <>
@@ -50,7 +42,7 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({ data, se
           className="MyRoot"
           style={{ maxHeight: '600px', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
         >
-          {data.map((product: any, index: number) => {
+          {data.map((product: Product, index: number) => {
             return (
               <div ref={index === data.length - 1 ? targetRef : null} key={product.id + index}>
                 <ShopProductСart
@@ -63,29 +55,15 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({ data, se
                   description={product.desc}
                   image={product.photo}
                   addMode
+                  noEdit
                   refetch={updateData}
                 />
               </div>
             );
           })}
         </div>
-        <div style={{ display: 'flex' }}>
-          {page > 1 && (
-            <DefaultButton
-              label={'Назад'}
-              onClick={() => {
-                setPage((previousValue: number) => previousValue - 1);
-                updateData();
-              }}
-            />
-          )}
-          <DefaultButton
-            label={'Вперед'}
-            onClick={() => {
-              setPage((previousValue: number) => previousValue + 1);
-              updateData();
-            }}
-          />
+        <div>
+          <Pagination count={total_pages} page={page} onChange={handleChange} />
         </div>
         <Modal visible={visible} onClose={() => setVisible(false)}>
           <AddProductForm

@@ -53,16 +53,9 @@ const Basket: FC = () => {
   const input = getdata();
 
   const addProduct = () => {
-    createOrder({ variables: { input } })
-      .then((res) => {
-        localStorage.setItem('orderId', res.data.orders.add.id);
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
-      .finally(() => {
-        localStorage.setItem('protectedMode', '');
-      });
+    createOrder({ variables: { input } }).catch((err) => {
+      alert(err.message);
+    });
   };
 
   return (
@@ -84,7 +77,7 @@ const Basket: FC = () => {
           })}
         </div>
         {LoginName ? (
-          <DefaultButton label={'Оформить заказ'} onClick={addProduct} />
+          <DefaultButton label={'Оформить заказ'} disabled={listProducts.length == 0} onClick={addProduct} />
         ) : (
           <Tooltip
             title="Для оформления заказа необходимо зарегистрироваться"

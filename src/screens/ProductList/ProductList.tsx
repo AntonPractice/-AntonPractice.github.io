@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import * as s from './styles.module.scss';
 import { ListShopProduct } from 'src/components/ListShopProduct/ListShopProduct';
 import { CategoryMenu } from 'src/components/CategoryMenu/CategoryMenu';
@@ -21,6 +21,7 @@ const GET_PRODUCTS = gql`
         pagination {
           pageSize
           pageNumber
+          total
         }
       }
     }
@@ -48,7 +49,7 @@ const ProductList: FC = () => {
   const input = {
     categoryIds: nameCategory,
     pagination: {
-      pageSize: 10,
+      pageSize: 6,
       pageNumber: page,
     },
   };
@@ -62,23 +63,25 @@ const ProductList: FC = () => {
   });
 
   const listProducts = dataProducts && dataProducts.products.getMany.data;
+  const listPagination = dataProducts && dataProducts.products.getMany.pagination;
+
   const updateData = () => {
     setTimeout(() => {
       refetch();
     }, 100);
   };
-
+  const updateCallback = useCallback(updateData, [updateData]);
 
   useEffect(() => {
     setTimeout(() => {
-      updateData();
+      updateCallback();
     }, 100);
     return () => {
       setTimeout(() => {
         localStorage.setItem('unTokenMode', '');
       }, 300);
     };
-  }, []);
+  }, [updateCallback]);
 
   const { data: dataCategory, error: errorCategory, loading: loadingCategory } = useQuery(GET_CATEGORIES);
 
@@ -88,10 +91,22 @@ const ProductList: FC = () => {
     <div className={s.root}>
       {loadingCategory && <CircularProgress />}
       {errorCategory && <div>{errorCategory.message}</div>}
-      {dataCategory && <CategoryMenu categories={categories} setNameCategory={setNameCategory} />}
+      {dataCategory && (
+        <div style={{ display: 'flex' }}>
+          <CategoryMenu categories={categories} setNameCategory={setNameCategory} />
+        </div>
+      )}
       {loadingProducts && <CircularProgress />}
       {errorProducts && <div>{errorProducts.message}</div>}
-      {dataProducts && <ListShopProduct data={listProducts} page={page} setPage={setPage} updateData={updateData} />}
+      {dataProducts && (
+        <ListShopProduct
+          data={listProducts}
+          page={page}
+          setPage={setPage}
+          updateData={updateData}
+          listPagination={listPagination}
+        />
+      )}
     </div>
   );
 };

@@ -6,7 +6,8 @@ import Modal from '../Modal/Modal';
 import { profileSelectors } from 'src/store/profile';
 import { gql, useQuery } from '@apollo/client';
 import { AddProductForm } from '../ProductForm/AddProductForm';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Pagination } from '@mui/material';
+import { Product } from 'src/server.types';
 
 const GET_PRODUCTS = gql`
   query Data($input: ProductGetManyInput) {
@@ -24,49 +25,32 @@ const GET_PRODUCTS = gql`
         pagination {
           pageSize
           pageNumber
+          total
         }
       }
     }
   }
 `;
 
-interface Product {
-  price?: number;
-  id?: string;
-  name?: string;
-  image?: string;
-  description?: string;
-}
-
-export interface ListShopProductProductСartProps {
-  unTokenMode?: boolean;
-}
-
-export const createRandomProduct = (createdAt: string): Product => {
-  const rundomProductId: string = Math.random().toString(16).slice(-8);
-  return {
-    id: createdAt,
-    name: 'Product_' + rundomProductId,
-    image: 'IMG_' + rundomProductId,
-    price: Math.floor(Math.random() * 10000),
-    description: 'Description' + rundomProductId,
-  };
-};
-
-export const ProfileShopProducts: FC<ListShopProductProductСartProps> = ({ unTokenMode }) => {
+export const ProfileShopProducts: FC = () => {
   const [page, setPage] = useState<number>(1);
+
   const input = {
     pagination: {
       pageSize: 5,
       pageNumber: page,
     },
   };
+  localStorage.setItem('unTokenMode', '');
+
   const { data, error, loading, refetch } = useQuery(GET_PRODUCTS, {
     variables: { input },
   });
 
   const listProducts = data && data.products.getMany.data;
-  localStorage.setItem('unTokenMode', '');
+  const listPagination = data && data.products.getMany.pagination;
+  const total_pages = listPagination && Math.ceil(listPagination.total / 6);
+
   const profile = useSelector(profileSelectors.get);
   const targetRef = useRef<HTMLDivElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -77,6 +61,11 @@ export const ProfileShopProducts: FC<ListShopProductProductСartProps> = ({ unTo
       refetch();
     }, 100);
   };
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   if (loading) return <CircularProgress />;
   if (error) return <div>{error.message}</div>;
   return (
@@ -86,7 +75,7 @@ export const ProfileShopProducts: FC<ListShopProductProductСartProps> = ({ unTo
         className="MyRoot"
         style={{ maxHeight: '600px', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
       >
-        {listProducts.map((product: any, index: number) => {
+        {listProducts.map((product: Product, index: number) => {
           return (
             <div ref={index === listProducts.length - 1 ? targetRef : null} key={product.id + index}>
               <ShopProductСart
@@ -106,22 +95,7 @@ export const ProfileShopProducts: FC<ListShopProductProductСartProps> = ({ unTo
         })}
       </div>
       <div style={{ display: 'flex' }}>
-        {page > 1 && (
-          <DefaultButton
-            label={'Назад'}
-            onClick={() => {
-              setPage((previousValue) => previousValue - 1);
-              updateData();
-            }}
-          />
-        )}
-        <DefaultButton
-          label={'Вперед'}
-          onClick={() => {
-            setPage((previousValue) => previousValue + 1);
-            updateData();
-          }}
-        />
+        <Pagination count={total_pages} page={page} onChange={handleChange} />
       </div>
       {adminResp && <DefaultButton label={'Добавить новый продукт'} onClick={() => setVisible(true)} />}
       <Modal visible={visible} onClose={() => setVisible(false)}>
