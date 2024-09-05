@@ -78,27 +78,29 @@ const Basket: FC = () => {
             );
           })}
         </div>
-        {LoginName ? (
-          <DefaultButton label={t('goods.order')} disabled={listProducts.length == 0} onClick={addProduct} />
-        ) : (
-          <Tooltip
-            title="Для оформления заказа необходимо зарегистрироваться"
-            slotProps={{
-              popper: {
-                modifiers: [
-                  {
-                    name: 'offset',
-                    options: {
-                      offset: [0, -14],
+        <div style={{ marginTop: '50px' }}>
+          {LoginName ? (
+            <DefaultButton label={t('goods.order')} disabled={listProducts.length == 0} onClick={addProduct} />
+          ) : (
+            <Tooltip
+              title="Для оформления заказа необходимо зарегистрироваться"
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -14],
+                      },
                     },
-                  },
-                ],
-              },
-            }}
-          >
-            <Button>Оформить заказ</Button>
-          </Tooltip>
-        )}
+                  ],
+                },
+              }}
+            >
+              <Button>Оформить заказ</Button>
+            </Tooltip>
+          )}
+        </div>
       </Frame>
     </div>
   );
