@@ -37,11 +37,7 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({
   return (
     <>
       <>
-        <div
-          ref={rootRef}
-          className="MyRoot"
-          style={{ maxHeight: '600px', display: 'flex', flexDirection: 'column', overflow: 'auto' }}
-        >
+        <div ref={rootRef} className="MyRoot" style={{ maxHeight: '610px', display: 'flex', flexDirection: 'column' }}>
           {data.map((product: Product, index: number) => {
             return (
               <div ref={index === data.length - 1 ? targetRef : null} key={product.id + index}>
