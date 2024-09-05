@@ -37,7 +37,7 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({
   return (
     <>
       <>
-        <div ref={rootRef} className="MyRoot" style={{ maxHeight: '610px', display: 'flex', flexDirection: 'column' }}>
+        <div ref={rootRef} className="MyRoot" style={{ maxHeight: '600px', display: 'flex', flexDirection: 'column' }}>
           {data.map((product: Product, index: number) => {
             return (
               <div ref={index === data.length - 1 ? targetRef : null} key={product.id + index}>
@@ -58,7 +58,7 @@ export const ListShopProduct: FC<ListShopProductProductСartProps> = ({
             );
           })}
         </div>
-        <div>
+        <div style={{ marginTop: '30px' }}>
           <Pagination count={total_pages} page={page} onChange={handleChange} />
         </div>
         <Modal visible={visible} onClose={() => setVisible(false)}>

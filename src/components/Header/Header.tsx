@@ -65,9 +65,9 @@ export const Header: FC = () => {
       <div className={styles.storybookHeader} style={theme === 'dark' ? { backgroundColor: 'rgb(177, 189, 230)' } : {}}>
         <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
           <Tab component={Link} label={t('tabs.prodList')} to="/" />
-          {/* <Tab component={Link} label={t('tabs.myProducts')} to="/mybooks" />
+          {/* <Tab component={Link} label={t('tabs.myProducts')} to="/mybooks" /> */}
           <Tab component={Link} label={t('tabs.basket')} to="/other" />
-          <Tab component={Link} label={t('tabs.orders')} to="/orders" />
+          {/* <Tab component={Link} label={t('tabs.orders')} to="/orders" />
           <Tab component={Link} label={t('tabs.profile')} to="/ProfileScreen" /> */}
         </Tabs>
       </div>
