@@ -39,18 +39,12 @@ export const Header: FC = () => {
   localStorage.setItem('userInfo', JSON.stringify(profile));
   return (
     <header>
-      <div className={styles.storybookHeader} style={theme === 'dark' ? { backgroundColor: 'rgb(177, 189, 230)' } : {}}>
-        <div>
+      {' '}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <Logo />
           <h1>pRo bOOKS</h1>
         </div>
-        <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
-          <Tab component={Link} label={t('tabs.prodList')} to="/" />
-          <Tab component={Link} label={t('tabs.myProducts')} to="/mybooks" />
-          <Tab component={Link} label={t('tabs.basket')} to="/other" />
-          <Tab component={Link} label={t('tabs.orders')} to="/orders" />
-          <Tab component={Link} label={t('tabs.profile')} to="/ProfileScreen" />
-        </Tabs>
         <div>
           <>
             <span className={styles.welcome}>{LoginName}</span>
@@ -67,6 +61,15 @@ export const Header: FC = () => {
             <ButtonLang />
           </>
         </div>
+      </div>
+      <div className={styles.storybookHeader} style={theme === 'dark' ? { backgroundColor: 'rgb(177, 189, 230)' } : {}}>
+        <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
+          <Tab component={Link} label={t('tabs.prodList')} to="/" />
+          {/* <Tab component={Link} label={t('tabs.myProducts')} to="/mybooks" />
+          <Tab component={Link} label={t('tabs.basket')} to="/other" />
+          <Tab component={Link} label={t('tabs.orders')} to="/orders" />
+          <Tab component={Link} label={t('tabs.profile')} to="/ProfileScreen" /> */}
+        </Tabs>
       </div>
     </header>
   );
